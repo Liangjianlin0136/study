@@ -260,10 +260,11 @@ git branch -d 分支名称
 然后创建完自己的仓库之后github会给仓库定义一个地址，然后我们可以通过git把自己管理的版本上传到github中，具体代码如下：
 
 ```
-git remote add origin https://github.com/********0136/-.git  //把自己仓库的地址命名成origin，以后就可以使用origin来代替自己的仓库地址了。
-git push -u origin master //把master主干线管理的版本上传到自己的仓库中
-git push -u origin 其他分支的名称 //把任意分支管理的版本上传到自己的仓库中
-git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面下载在公司里上传的版本内容)
+1、git remote add origin https://github.com/********0136/-.git  //把自己仓库的地址命名成origin，以后就可以使用origin来代替自己的仓库地址了。
+2、git push -u origin master //把master主干线管理的版本上传到自己的仓库中
+3、git push -u origin 其他分支的名称 //把任意分支管理的版本上传到自己的仓库中
+4、注意：在第一次在(各种支线)上传或者下载代码的时候可能会出现上传失败或者是下载失败的报错(failed to push some refs to git)，原因是github中的README.md文件不在本地代码目录中，这时候只需要加上：git pull --rebase origin master/其他支线名称， 即在github的仓库中的README.md文件下载到本地目录中
+5、git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面下载在公司里上传的版本内容)
 ```
 
 ![](D:\Typora_img\git_img\img_2\img_1.png)
@@ -275,12 +276,12 @@ git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面
 1. 在公司进行代码的编写及上传(第一次)
 
    ```
-   git branch dev //创建dev分支
-   git checkout dev //切换到dev分支
-   git merge master //把master分支上的内容合并上dev分支上，因为master分支上的代码是最新的，而且是没有bug
+   1、git branch dev //创建dev分支
+   2、git checkout dev //切换到dev分支
+   3、git merge master //把master分支上的内容合并上dev分支上，因为master分支上的代码是最新的，而且是没有bug
    编写代码
-   git add. /commit -m '公司编写的代码' //生成版本，上传代码
-   git push origin dev //把生成的版本上传到github仓库中
+   4、git add. /commit -m '公司编写的代码' //生成版本，上传代码
+   5、git push origin dev //把生成的版本上传到github仓库中
    ```
 
    
@@ -288,11 +289,11 @@ git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面
 2. 在家里对公司代码进行下载以及继续编写，接着编写完成后继续上传
 
    ```
-   git checkout dev //切换回dev分支中，因为要保持分支一致，这样可以保持上传代码的准确性以及规范性
-   git pull origin dev //把dev代码拉下来，这里不用clone是因为clone会把该仓库的所有线路的内容都拉下来，每次都这样拉下来的话会降低效率，而且文件占领的空间也比较多
-   编写代码
-   git add. / commit -m '在家编写的代码' //生成版本，上传代码
-   git push origin dev //把生成的版本再次上传到github仓库中
+   1、git checkout dev //切换回dev分支中，因为要保持分支一致，这样可以保持上传代码的准确性以及规范性
+   2、git pull origin dev //把dev代码拉下来，这里不用clone是因为clone会把该仓库的所有线路的内容都拉下来，每次都这样拉下来的话会降低效率，而且文件占领的空间也比较多
+   3、编写代码
+   4、git add. / commit -m '在家编写的代码' //生成版本，上传代码
+   5、git push origin dev //把生成的版本再次上传到github仓库中
    ```
 
    
@@ -300,11 +301,11 @@ git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面
 3. 在公司进行代码的下载以及再次的上传（第二次）
 
    ```
-   git checkout dev
-   git pull origin dev
-   编写代码
-   git add ./ git commit -m '在公司上传的第二次代码'
-   git push origin dev
+   1、git checkout dev
+   2、git pull origin dev
+   3、编写代码
+   4、git add ./ git commit -m '在公司上传的第二次代码'
+   5、git push origin dev
    ```
 
 
@@ -312,16 +313,48 @@ git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面
 4. 开发功能完毕，准备上线
 
    ```
-   git checkout master //切换成主分支master，因为master就是放正式上线的版本的
-   git merge dev //合并dev功能支线
-   git push origin master //把正式版放到github仓库中
+   1、git checkout master //切换成主分支master，因为master就是放正式上线的版本的
+   2、git merge dev //合并dev功能支线
+   3、git push origin master //把正式版放到github仓库中
    ```
 
    
 
 ## 第四章、忘推送代码
 
+情景如下：当在公司忘记提交当天编写的代码到github上，回到家后又编写了新的代码并且上传到github上，第二天回到公司的时候就要对今天以及昨天的代码进行合并，但是合并的途中会产生冲突，比如代码可能重复了，核实后在git上面通过vim进行修改并且整合，最后上传到github即可。
+
+
+
 ## 第五章、rebase应用场景一
+
+把多个提交记录整合成一个提交记录
+
+1. 方法一
+
+```
+1、git rebase -i 版本号 //表示此版本到最新的一个版本的所有版本整合成为一个版本
+```
+
+![](D:\Typora_img\git_img\img_2\img-2.png)
+
+​                                                                        图2
+
+
+
+2. 方法2
+
+   ```
+   1、git rebase -i HEAD~2 //表示找到从当前开始最近的两条记录进行合并
+   ```
+
+
+
+3. 注意
+
+   合并版本时，不要合并已经提交上github里的版本，如果合并了github上面的版本然后在重新提交上去github的话，那么原先存在github的版本就会变得模糊，当你修改了合并版本的时候，那么原来在github上的那个版本也要进行修改，避免记录不一致，这样工作量就会很大而且很麻烦，所以不要合并已经上传之后的版本。
+
+   
 
 ## 第六章、rebase应用场景二
 
