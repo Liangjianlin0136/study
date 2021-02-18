@@ -246,7 +246,114 @@ git branch -d 分支名称
 
 # 二、github的学习及应用
 
+## 第一章：github
 
+1. github是一个在云端上的代码托管，要使用github需要做到以下几点：
+   - 注册github账号
+   - 创建一个仓库
+   - 把本地代码推送到远程仓库
+
+## 第二章、基于github做代码托管
+
+现在github上创建属于自己的仓库，并为自己的仓库命名。
+
+然后创建完自己的仓库之后github会给仓库定义一个地址，然后我们可以通过git把自己管理的版本上传到github中，具体代码如下：
+
+```
+git remote add origin https://github.com/********0136/-.git  //把自己仓库的地址命名成origin，以后就可以使用origin来代替自己的仓库地址了。
+git push -u origin master //把master主干线管理的版本上传到自己的仓库中
+git push -u origin 其他分支的名称 //把任意分支管理的版本上传到自己的仓库中
+git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面下载在公司里上传的版本内容)
+```
+
+![](D:\Typora_img\git_img\img_2\img_1.png)
+
+​                                                                                            图1
+
+## 第三章、公司和家里的代码上传以及下载
+
+1. 在公司进行代码的编写及上传(第一次)
+
+   ```
+   git branch dev //创建dev分支
+   git checkout dev //切换到dev分支
+   git merge master //把master分支上的内容合并上dev分支上，因为master分支上的代码是最新的，而且是没有bug
+   编写代码
+   git add. /commit -m '公司编写的代码' //生成版本，上传代码
+   git push origin dev //把生成的版本上传到github仓库中
+   ```
+
+   
+
+2. 在家里对公司代码进行下载以及继续编写，接着编写完成后继续上传
+
+   ```
+   git checkout dev //切换回dev分支中，因为要保持分支一致，这样可以保持上传代码的准确性以及规范性
+   git pull origin dev //把dev代码拉下来，这里不用clone是因为clone会把该仓库的所有线路的内容都拉下来，每次都这样拉下来的话会降低效率，而且文件占领的空间也比较多
+   编写代码
+   git add. / commit -m '在家编写的代码' //生成版本，上传代码
+   git push origin dev //把生成的版本再次上传到github仓库中
+   ```
+
+   
+
+3. 在公司进行代码的下载以及再次的上传（第二次）
+
+   ```
+   git checkout dev
+   git pull origin dev
+   编写代码
+   git add ./ git commit -m '在公司上传的第二次代码'
+   git push origin dev
+   ```
+
+
+
+4. 开发功能完毕，准备上线
+
+   ```
+   git checkout master //切换成主分支master，因为master就是放正式上线的版本的
+   git merge dev //合并dev功能支线
+   git push origin master //把正式版放到github仓库中
+   ```
+
+   
+
+## 第四章、忘推送代码
+
+## 第五章、rebase应用场景一
+
+## 第六章、rebase应用场景二
+
+## 第七章、rebase应用场景三及注意事项
+
+## 第八章、beyongd compare 快速解决冲突
+
+## 第九章、命令总结
+
+# 三、多人协同开发
+
+## 第一章、多人协同开发gitflow工作流思路
+
+## 第二章、多人协同开发之创建初始项目和版本
+
+## 第三章、多人协同开发之邀请成员(1)
+
+## 第四章、多人协同开发之邀请小弟参与开发
+
+## 第五章、多人协同开发之代码review
+
+## 第六章、多人协同开发之测试上线
+
+# 四、其他学习内容及结课
+
+## 第一章、git免密登录
+
+## 第二章、gitignore忽略文件
+
+## 第三章、github做任务管理
+
+## 第四章、结课
 
 
 
