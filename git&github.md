@@ -358,15 +358,134 @@ git branch -d 分支名称
 
 ## 第六章、rebase应用场景二
 
+rebase可以是支线版本和主线版本整合的时候更加方便，之前学的方法有：
+
+1. merge方法(例如将支线版本dev合并到主线版本master)
+
+   ```
+   1、git checkout master
+   2、git merge dev
+   ```
+
+   
+
+   - 其流程图如下：
+
+     <img src="git&github.assets/img_3.png" style="zoom: 50%;" />
+
+2. rebase方法（直接把支线版本dev整合到当前master版本中)
+
+   ```
+   1、git checkout dev  //先切换到dev分支
+   2、git rebase master //在将dev分支直接插到master分支上
+   3、git checkout master //再次切换到master分支上
+   4、git merge dev //把插入的dev功能合并到master分支上，形成一条线路 
+   ```
+
+   
+
+   - 其流程图如下：
+
+     <img src="git&github.assets/img_4.png" style="zoom: 50%;" />
+
+     最后变成一条主干线，支线数目为0
+
+     <img src="git&github.assets/img_5.png" style="zoom:50%;" />
+
+
+
 ## 第七章、rebase应用场景三及注意事项
+
+1. 应用场景：当在公司中写了代码只上传到本地服务器而没上传到github上，而回到家后又写了另外一个功能的代码并把该代码上传到了github，第二天再把在家里写的代码整合到昨天没有上传到github的代码中。会有以下这么个操作：
+
+```
+1、git pull origin dev //这个操作会导致在功能合并的时候产生分叉(代码冲突)，因为git pull origin dev相当与
+git fetch origin dev + git merge dev 
+2、git fetch origin dev  + git rebase origin/dev //这个操作则不会导致代码重复而引起的冲突
+```
+
+2. 注意事项：若在执行rebase时发生冲突了，不要慌! 先把冲突给解决了，在把解决完的版本上传之后，接着重新启动rebase执行整合即可：
+
+```
+1、git add 解决完冲突的版本.XXX
+2、git commit -m '解决完冲突的版本名'
+3、git rebase --continue //重启rebase
+```
+
+
 
 ## 第八章、beyongd compare 快速解决冲突
 
+1. 安装beyond compare
+
+2. 在git中配置 beylond compare
+
+   ```
+   1、git config --local merge.tool bc3
+   2、git config --local mergetool.bc3.path 'belond compare所存放的地址'
+   3、git config --local mergetool.keepBackup false
+   //这三条就把beylond compare配置到了git中了，这里注意一点的就是：这里的配置文件使用的是--local，就是说明beylond compare只适用于该文件，其他文件下的git不可以使用，得重新配置。
+   4、git mergetool //若该文件下有冲突，则beylond compare自动启动，解决冲突；若该文件下没有冲突，则提示：No file need merging
+   ```
+
+   ![](git&github.assets/img-6-1613718708910.png)
+
+   ![](git&github.assets/img-7-1613718909198.png)
+
 ## 第九章、命令总结
+
+1. 添加远程连接
+
+   ```
+   git remote add origin 地址
+   ```
+
+   
+
+2. 推送代码至远程服务器
+
+   ```
+   git push origin 分支名称
+   ```
+
+   
+
+3. 下载远程服务器上面的全部分支代码
+
+   ```
+   git clone origin
+   ```
+
+   
+
+4. 下载远程服务器上面的部分代码
+
+   ```
+   git pull origin 分支名称
+   或是 git fetch origin 分支名称 + git merge 分支名称
+   ```
+
+   
+
+5. 保持代码整合的时候不产生冲突
+
+   ```
+   git rebase 分支名称
+   ```
+
+   
 
 # 三、多人协同开发
 
 ## 第一章、多人协同开发gitflow工作流思路
+
+![](git&github.assets/img-8-1613723751168.png)
+
+思路如下：
+
+- 每个大的功能可以拆分成很多小功能供不同部门及个人开发
+- 每个小功能开发完成后交由项目经理或部门负责人进行代码检查(review)
+- 代码检查通过后将进行代码测试，若有bug及时修改并整合，若无bug或者bug已经修改完毕则可以进行功能的上线
 
 ## 第二章、多人协同开发之创建初始项目和版本
 
