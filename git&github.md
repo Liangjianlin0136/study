@@ -53,9 +53,9 @@
    git init
    ```
 
-   ![](D:\Typora_img\git_img\img_1\img-1.png)
+   <img src="git&github.assets/img-1.png"  />
 
-   ​                                                                                         图2
+   ​                                                                                         图1
 
    
 
@@ -83,17 +83,17 @@
    git log
    ```
 
-   <img src="D:\Typora_img\git_img\img_1\img-2.png" style="zoom:67%;" />
+   ![](git&github.assets/img-2.png)
+
+   ​                                                                                             图2
+
+   <img src="git&github.assets/img-3.png" style="zoom:67%;" />
 
    ​                                                                                             图3
 
-   <img src="D:\Typora_img\git_img\img_1\img-3.png" style="zoom: 67%;" />
+   <img src="git&github.assets/img-4.png" style="zoom:67%;" />
 
    ​                                                                                             图4
-
-   <img src="D:\Typora_img\git_img\img_1\img-4.png" style="zoom:67%;" />
-
-   ​                                                                                             图5
 
 5. 总结(生成版本的步骤)
 
@@ -126,7 +126,7 @@
 
 3. 版本库：存放版本的仓库。
 
-   
+   <img src="git&github.assets/img-8.png" style="zoom:67%;" />
 
 ## 第七章、回滚
 
@@ -139,15 +139,15 @@
    git reset --hard 回到下一个版本的编号// 两个编号不一样的 这个要注意
    ```
 
-   <img src="D:\Typora_img\git_img\img_1\img-5.png" style="zoom:67%;" />
+   <img src="git&github.assets/img-5.png" style="zoom:67%;" />
 
-   ​                                                                                           图6
+   ​                                                                                           图5
 
    
 
-   <img src="D:\Typora_img\git_img\img_1\img-6.png" style="zoom:67%;" />
+   <img src="git&github.assets/img-6.png" style="zoom:67%;" />
 
-   ​                                                                                                 图7
+   ​                                                                                                 图6
 
 2. 提示：这里的版本地址非常长，要想复制地址的话，要先选中地址，点击按键ctrl+ins复制，shift+ins粘贴即可。
 
@@ -203,9 +203,9 @@ git checkout master //切换成主干路
 git merge dev //把dev分支合并上主干上
 ```
 
-<img src="D:\Typora_img\git_img\img_1\img-7.png" style="zoom:67%;" />
+![](git&github.assets/img-7.png)
 
-​                                                                                                    图8
+​                                                                                                    图7
 
 ## 第十二章、命令总结和工作流
 
@@ -267,7 +267,7 @@ git branch -d 分支名称
 5、git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面下载在公司里上传的版本内容)
 ```
 
-![](D:\Typora_img\git_img\img_2\img_1.png)
+![](git&github.assets/img_1.png)
 
 ​                                                                                            图1
 
@@ -336,9 +336,9 @@ git branch -d 分支名称
 1、git rebase -i 版本号 //表示此版本到最新的一个版本的所有版本整合成为一个版本
 ```
 
-![](D:\Typora_img\git_img\img_2\img-2.png)
+<img src="git&github.assets/img-2-1613693518782.png" style="zoom:100%;" />
 
-​                                                                        图2
+​                                                                                图2
 
 
 
