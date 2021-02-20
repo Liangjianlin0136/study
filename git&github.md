@@ -483,29 +483,135 @@ git fetch origin dev + git merge dev
 
 思路如下：
 
+- 每个项目划分成多个大的功能
 - 每个大的功能可以拆分成很多小功能供不同部门及个人开发
 - 每个小功能开发完成后交由项目经理或部门负责人进行代码检查(review)
 - 代码检查通过后将进行代码测试，若有bug及时修改并整合，若无bug或者bug已经修改完毕则可以进行功能的上线
 
 ## 第二章、多人协同开发之创建初始项目和版本
 
+1. 方法一：直接邀请其他人参与你的项目开发：先创建个人的项目仓库，创建完成后点击settings—>Manage access—>invite a collaborator即可发出项目协作开发邀请，之后被邀请人会收到一封邮件，询问被邀请人是否加入参与项目开发，同意之后即可参与开发。
+
+   ![](git&github.assets/img-9.png)
+
+   ![](git&github.assets/img-10.png)
+
+2. 方法二：先创建一个组织(New organization)，然后在组织中可以创建若干个项目，接着邀请不同的成员赋予不同的权限来对不同的项目进行开发。
+
+   ![](git&github.assets/img-11.png)
+
+   ![](git&github.assets/img-12.png)
+
+   ![](git&github.assets/img-13.png)
+
+3. 注意：因为每个版本的版本号都是一串非常长的代码，所以为了简化版本号，我们可以这样操作：
+
+   ```
+   1、git tag -a v1 -m "第一版"  //把第一版的功能设置一个标签v1
+   2、git push origin --tags
+   ```
+
+   ![](git&github.assets/img-14.png)
+
 ## 第三章、多人协同开发之邀请成员(1)
 
-## 第四章、多人协同开发之邀请小弟参与开发
+步骤：
+
+- 点击邀请某人
+
+- 搜索到要邀请的用户，发送邀请邮件
+
+- 被邀请的用户在邮箱上点击确认即可加入组织
+
+  ![](git&github.assets/img-15.png)
+
+## 第四章、多人协同开发之邀请成员参与开发
+
+```
+1、git clone origin //成员需要先下载源代码
+2、git checkout dev //切换到开发功能的分支上
+3、git branch ddz //创建属于自己功能部分的分支
+4、git checkout ddz
+5、git push origin ddz //把开发完的代码上传到分支上面
+```
+
+![](git&github.assets/img-16.png)
 
 ## 第五章、多人协同开发之代码review
 
+先对项目进行配置：
+
+1. 给分支添加规则，这里添加的规则就是当合并dev分支的时候，要进行一次review
+
+![](git&github.assets/img-17.png)
+
+2. 规则创建完成
+
+   ![](git&github.assets/img-18.png)
+
+3. 提交ddz功能至dev中进行一次review
+
 ## 第六章、多人协同开发之测试上线
+
+1. 在功能分支上创建测试分支
+
+```
+git checkout dev
+git checkout -b release  这句代码相当于git branch release + git checkout release
+git push origin release //把要测试的代码推送到测试分支中
+```
+
+2. 测试完成之后在利用github上面的pull request将release分支合并到master分支上面，然后将其上线；而后再把release分支合并到dev分支上面，使dev分支的bug清除
+3. 删除release分支
 
 # 四、其他学习内容及结课
 
-## 第一章、git免密登录
+## 第一章、配置文件存放三个位置
+
+1. 项目配置文件(只在该项目中生效)
+
+   ```
+   git config --local user.name 'liangjianlin'
+   git config --local user.email 'liangjianlin@xxx.com'
+   ```
+
+2. 全局配置文件(对所有文件项目都生效)
+
+   ```
+   git config --global user.name 'liangjianlin'
+   git config --global user.email 'liangjianlin@xxx.com'
+   ```
+
+3. 系统配置文件(对本系统中的所有文件都生效)
+
+   ```
+   git config --system user.name 'liangjianlin'
+   git config --system user.email 'liangjianlin@xxx.com'
+   
+   注意：修改系统的配置文件需要有root权限
+   ```
+
+   
 
 ## 第二章、gitignore忽略文件
 
+让git不在管理当前目录下的某些文件
+
+```
+.gitignore文件下：
+*.h
+！a.h
+若出现以上代码的话，说明gitignore会忽略掉除了a.h的所有.h文件
+```
+
+更多参考：https://github.com/github/gitignore
+
+
+
 ## 第三章、github做任务管理
 
-## 第四章、结课
+1. issues:在github上提交一个issues给特定的人(项目开发人员等等)，issues包括提问题或bug等等，然后等那边的人回复即可
+2. wiki：wiki相当于给自己上传的项目进行介绍(项目文档)，供其他人观看参考
 
 
 
