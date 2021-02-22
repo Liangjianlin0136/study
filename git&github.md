@@ -74,6 +74,7 @@
 
    ```
    git commit -m 'version_1'(把上述管理的文件生成第一个版本)
+   git commit --amend(若version_1内容无变动，则可以使用这条命令来改变该版本的版本名)
    //不过在你提交第一次版本之前，git会先询问你电脑的邮箱和你的用户名，则需要输入以下命令
    git config --global user.email "*****@qq.com"
    git config --global user.name "梁**"
@@ -120,11 +121,17 @@
 
 ## 第六章、git的三大区域
 
-1. 工作区：工作区存放新的文件，通过git add 把工作区的文件放入到暂存区中。
+1. 工作区：是对项目的某个版本独立提取出来的内容。 这些从 Git 仓库的压缩数据库中提取出来的文件，放在磁盘上供你使用或修改。
 
-2. 暂存区：通过 git commit -m 命令把暂存区的文件生成版本。同时也可以回滚回工作区。
+2. 暂存区：暂存区是一个文件，保存了下次将要提交的文件列表信息，一般在 Git 仓库目录中。
 
-3. 版本库：存放版本的仓库。
+3. 版本库：Git 用来保存项目的元数据和对象数据库的地方。
+
+4. Git的工作流程如下：
+
+   - 在工作区中修改文件。
+   - 将你想要下次提交的更改选择性地暂存，这样只会将更改的部分添加到暂存区。
+   - 提交更新，找到暂存区的文件，将快照永久性存储到 Git 目录。
 
    <img src="git&github.assets/img-8.png" style="zoom:67%;" />
 
@@ -260,11 +267,18 @@ git branch -d 分支名称
 然后创建完自己的仓库之后github会给仓库定义一个地址，然后我们可以通过git把自己管理的版本上传到github中，具体代码如下：
 
 ```
-1、git remote add origin https://github.com/********0136/-.git  //把自己仓库的地址命名成origin，以后就可以使用origin来代替自己的仓库地址了。
-2、git push -u origin master //把master主干线管理的版本上传到自己的仓库中
-3、git push -u origin 其他分支的名称 //把任意分支管理的版本上传到自己的仓库中
-4、注意：在第一次在(各种支线)上传或者下载代码的时候可能会出现上传失败或者是下载失败的报错(failed to push some refs to git)，原因是github中的README.md文件不在本地代码目录中，这时候只需要加上：git pull --rebase origin master/其他支线名称， 即在github的仓库中的README.md文件下载到本地目录中
-5、git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面下载在公司里上传的版本内容)
+1、git remote add origin https://github.com/********0136/-.git  //把自己仓库的地址命名成origin，以后就可以使用origin来代替自己的仓库地址了
+2、git remote -v //显示需要读写远程仓库使用的 Git 保存的简写与其对应的 URL
+3、git remote show origin //查看某一个远程仓库的更多信息
+4、git push -u origin master //把master主干线管理的版本上传到自己的仓库中
+5、git push -u origin 其他分支的名称 //把任意分支管理的版本上传到自己的仓库中
+6、注意(重点)：在一次在(各种支线)上传或者下载代码的时候可能会出现上传失败或者是下载失败的报错(failed to push some refs to git)，原因是因为上次修改的和这次修改的要进行一次合并，但是git会要求你本地进行一次合并，查看是否存在冲突，若没有产生冲突，即可以进行上传，代码如下:
+6-1、git fetch origin /抓取在线服务器的代码 
+6-2、git merge origin/master /与本地仓库代码进行合并 
+6-3、git push origin master
+7、git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面下载在公司里上传的版本内容)
+8、git remote remove 仓库名 //删除远程仓库，即删除这个远程仓库相关的远程跟踪分支以及配置信息
+9、git push origin  --delete 分支名称 //删除远程分支
 ```
 
 ![](git&github.assets/img_1.png)
@@ -373,7 +387,7 @@ rebase可以是支线版本和主线版本整合的时候更加方便，之前�
 
      <img src="git&github.assets/img_3.png" style="zoom: 50%;" />
 
-2. rebase方法（直接把支线版本dev整合到当前master版本中)
+2. rebase方法（直接把支线版本dev整合到当前master版本中，如下流程图)
 
    ```
    1、git checkout dev  //先切换到dev分支
@@ -381,6 +395,32 @@ rebase可以是支线版本和主线版本整合的时候更加方便，之前�
    3、git checkout master //再次切换到master分支上
    4、git merge dev //把插入的dev功能合并到master分支上，形成一条线路 
    ```
+
+   
+
+3. 若有两条支线，只想合并一条支线(client)的话，应该怎么做(client是server的一条分支)：
+
+   ```
+   1、git rebase --onto master server client (这句命令的前提是 git checkout client)
+   2、checkout master
+   3、git merge client
+   ```
+
+   
+
+4. 若想继续合并server的话，则重复执行rebase命令即可
+
+   ```
+   1、git checkout server
+   2、git rebase master
+   3、git checkout master 
+   4、git merge server
+   5、git branch -d server/client //合并到master分支后即可以删除这两条分支。
+   ```
+
+   
+
+   这句命令的意思是：将client支线跳过server支线直接合并到master支线
 
    
 
@@ -450,10 +490,11 @@ git fetch origin dev + git merge dev
 
    
 
-3. 下载远程服务器上面的全部分支代码
+3. 下载服务器上面的全部分支代码
 
    ```
-   git clone origin
+   git clone origin  //远程服务器
+   git clone --bare new repository  本地git的地址 //下载本地服务器的内容到一个空的仓库中
    ```
 
    
@@ -591,7 +632,22 @@ git push origin release //把要测试的代码推送到测试分支中
    注意：修改系统的配置文件需要有root权限
    ```
 
-   
+
+4. 可以通过以下命令查看所有的配置以及它们所在的文件
+
+   ```
+   git config --list --show-origin
+   ```
+
+![](git&github.assets/img-19-1613958409818.png)
+
+5. 可以通过以下命令来列出所有Git当时能找到的配置
+
+```
+git config --list
+```
+
+
 
 ## 第二章、gitignore忽略文件
 
