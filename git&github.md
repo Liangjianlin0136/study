@@ -276,9 +276,11 @@ git branch -d 分支名称
 6-1、git fetch origin /抓取在线服务器的代码 
 6-2、git merge origin/master /与本地仓库代码进行合并 
 6-3、git push origin master
-7、git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面下载在公司里上传的版本内容)
-8、git remote remove 仓库名 //删除远程仓库，即删除这个远程仓库相关的远程跟踪分支以及配置信息
-9、git push origin  --delete 分支名称 //删除远程分支
+7、若在push的时候出现以下报错：Failed with error:....../.git,OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443的话，原因是因为push提交走的是ssh协议，而我们设置了http的代理，于是提交不了，可以用以下指令设置回ssh通道
+7-1、git config --global --unset http.proxy
+8、git clone 仓库地址 //在仓库地址下下载版本文件(比如在家里面下载在公司里上传的版本内容)
+9、git remote remove 仓库名 //删除远程仓库，即删除这个远程仓库相关的远程跟踪分支以及配置信息
+10、git push origin  --delete 分支名称 //删除远程分支
 ```
 
 ![](git&github.assets/img_1.png)
