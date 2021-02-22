@@ -560,7 +560,7 @@ git fetch origin dev + git merge dev
 
 步骤：
 
-- 点击邀请某人
+- 点击邀请某成员
 
 - 搜索到要邀请的用户，发送邀请邮件
 
